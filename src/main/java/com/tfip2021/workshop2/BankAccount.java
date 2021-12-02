@@ -1,6 +1,6 @@
 // Module 1 Day 2 Workshop
 
-package Module1Project.src.Day2Workshop;
+package com.tfip2021.workshop2;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public class BankAccount {
         )
     );
     private float accountBalance;
-    private ArrayList<String> transactions;
+    private ArrayList<String> transactions = new ArrayList<String>();
     private boolean closed = false;
     private String accountCreateDate = LocalDateTime.now().format(dtf);
     private String accountCloseDate;
@@ -71,6 +71,11 @@ public class BankAccount {
                 "Amount to withdraw cannot be negative"
             );
         }
+        else if (amount > this.getAccountBalance()) {
+            throw new IllegalArgumentException(
+                "Amount to withdraw is greater than Account balance"
+            );
+        }
         else if (this.closed) {
             throw new IllegalArgumentException(
                 "Amount cannot be withdrawn from closed Account"
@@ -79,5 +84,9 @@ public class BankAccount {
         this.accountBalance -= amount;
         this.transactions.add("withdraw $" + amount + " at <" +
         LocalDateTime.now().format(this.dtf) + ">");
+    }
+    public void closeAccount() {
+        this.setIsClosed(true);
+        this.setAccountCloseDate(LocalDateTime.now().format(this.dtf));
     }
 }

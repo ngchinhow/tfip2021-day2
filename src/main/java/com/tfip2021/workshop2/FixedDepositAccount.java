@@ -1,5 +1,5 @@
 // Module 1 Day 2 Workshop
-package Module1Project.src.Day2Workshop;
+package com.tfip2021.workshop2;
 
 public class FixedDepositAccount extends BankAccount {
     private float interest = 3;
