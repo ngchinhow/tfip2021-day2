@@ -30,22 +30,22 @@ public class FixedDepositAccount extends BankAccount {
 
     // setters
     public void setInterest(float intrst) {
-        if (this.interestUpdateCounter > 1) {
+        if (this.interestUpdateCounter >= 1) {
             throw new IllegalArgumentException(
                 "Cannot update interest amount more than once"
             );
         }
         this.interest = intrst;
-        interestUpdateCounter++;
+        this.interestUpdateCounter += 1;
     }
     public void setDuration(int dur) {
-        if (this.durationUpdateCounter > 1) {
+        if (this.durationUpdateCounter >= 1) {
             throw new IllegalArgumentException(
                 "Cannot update duration value more than once"
             );
         }
         this.duration = dur;
-        durationUpdateCounter++;
+        this.durationUpdateCounter += 1;
     }
 
     // methods

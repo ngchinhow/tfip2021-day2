@@ -37,7 +37,7 @@ public class BankAccountTest {
 
     @Test
     public void testWithdraw() {
-        BankAccount ba = new BankAccount("Chin How");
+        BankAccount ba = new BankAccount("Chin How", 50);
         boolean negativeNumber = false;
         boolean notEnoughBalance = false;
         boolean alreadyClosed = false;
