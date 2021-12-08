@@ -4,19 +4,18 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class BankAccountTest {
+    BankAccount ba = new BankAccount("Chin How", 50);
     @Test
     public void testDeposit() {
-        BankAccount ba = new BankAccount("Chin How");
-        boolean negativeNumber = false;
-        boolean alreadyClosed = false;
+        // Test depositing negative value
         try {
             ba.deposit(-100);
         }
         catch (IllegalArgumentException e) {
-            negativeNumber = true;
+            assertTrue("Test failed at negative value deposit", true);
         }
-        assertTrue("Test failed at negative value deposit", negativeNumber);
 
+        // Test depositing
         ba.deposit(100);
         int transactionSize = ba.getTransactions().size();
         assertTrue(
@@ -25,37 +24,36 @@ public class BankAccountTest {
                 get(transactionSize - 1).
                 matches("deposit \\$100\\.0 at <\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{7}>")
         );
+
+        // Test depositing to a closed Account
         ba.closeAccount();
         try {
             ba.deposit(100);
         }
         catch (IllegalArgumentException e) {
-            alreadyClosed = true;
+            assertTrue("Test failed at depositing to a closed Account", true);
         }
-        assertTrue("Test failed at depositing to a closed Account", alreadyClosed);
     }
 
     @Test
     public void testWithdraw() {
-        BankAccount ba = new BankAccount("Chin How", 50);
-        boolean negativeNumber = false;
-        boolean notEnoughBalance = false;
-        boolean alreadyClosed = false;
+        // Test withdrawing a negative value
         try {
             ba.withdraw(-100);
         }
         catch (IllegalArgumentException e) {
-            negativeNumber = true;
+            assertTrue("Test failed at negative value withdrawal", true);
         }
-        assertTrue("Test failed at negative value withdrawal", negativeNumber);
         
+        // Test withdrawing when there's not enough balance
         try {
             ba.withdraw(100);
         }
         catch (IllegalArgumentException e) {
-            notEnoughBalance = true;
+            assertTrue("Test failed at greater than balance withdrawal", true);
         }
-        assertTrue("Test failed at greater than balance withdrawal", notEnoughBalance);
+        
+        // Test withdrawing
         ba.deposit(100);
         ba.withdraw(100);
         int transactionSize = ba.getTransactions().size();
@@ -65,13 +63,14 @@ public class BankAccountTest {
                 get(transactionSize - 1).
                 matches("withdraw \\$100\\.0 at <\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{7}>")
         );
+
+        // Test withdrawing from a closed Account
         ba.closeAccount();
         try {
             ba.withdraw(100);
         }
         catch (IllegalArgumentException e) {
-            alreadyClosed = true;
+            assertTrue("Test failed at withdrawing from a closed Account", true);
         }
-        assertTrue("Test failed at withdrawing from a closed Account", alreadyClosed);
     }
 }
